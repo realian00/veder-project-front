@@ -64,7 +64,7 @@ class Lancar extends Component {
         if (this.state.serverStatus === '') {
             return (
                 <div className="tc ph0 ba bw0 shadow-5 br3 w-50 center backLancar">
-                    <h2 className="">Criar novo cadastro</h2>
+                    <h2 className="">Criar novo trabalho</h2>
                     <div className="fontLancar">
                         <div className="">
                             <p className="mb1"><strong>Entrada:</strong></p>
