@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import './Lancar.css'
 
-const serverAddress = 'http://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3004'
+const serverAddress = 'https://gcloudservice.biz:3004'
 
 class Lancar extends Component {
     
