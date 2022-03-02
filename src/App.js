@@ -14,8 +14,8 @@ import './App.css'
 import "tachyons"
 
 
-const serverAddress = 'https://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3004' 
-// const serverAddress = 'https://gcloudservice.biz/server/'
+// const serverAddress = 'https://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3004' 
+const serverAddress = 'https://gcloudservice.biz:3004'
 const socket = io(serverAddress, { transports: ['websocket', 'polling', 'flashsocket'] });
 // const socket = io(serverAddress, {secure: true, reconnect: true, rejectUnauthorized: false})
 
