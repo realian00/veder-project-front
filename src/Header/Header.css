@@ -1,4 +1,4 @@
-.headBar {
+.headBars {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffa84c+0,ff7b0d+100;Orange+3D */
 background: #ffa84c; /* Old browsers */
 background: -moz-linear-gradient(left,  #ffa84c 0%, #ff7b0d 100%); /* FF3.6-15 */
@@ -6,6 +6,11 @@ background: -webkit-linear-gradient(left,  #ffa84c 0%,#ff7b0d 100%); /* Chrome10
 background: linear-gradient(to right,  #ffa84c 0%,#ff7b0d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=1 ); /* IE6-9 */
 height: 10vh;
+}
+
+.headBar {
+    background: rgb(52,186,106);
+background: linear-gradient(90deg, rgba(52,186,106,1) 0%, rgba(69,154,68,1) 49%, rgba(19,52,30,1) 100%);
 }
 
 .marg {

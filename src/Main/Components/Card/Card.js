@@ -29,7 +29,7 @@ const Card = (props) => {
     } else if (hourResultAprovado > 10 && props.status === 'aprovado'){
         resultCss = 'bg-light-red'
     } else {
-        resultCss = 'bg-light-yellow'
+        resultCss = 'bg-light-gray'
     }
 
     return (
