@@ -1,0 +1,107 @@
+import React, { Component } from "react";
+import Orcamento from "./Orcamento";
+import Pendente from "./Pendente";
+import Aprovado from "./Aprovado";
+import Main from "./Main";
+
+import Header from "./Header";
+
+import { database } from "./database"
+import "tachyons"
+
+
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      database,
+      searchfield: '',
+      currentPage: 'main'
+    }
+  }
+
+  onSearchChange = (event) => {
+    this.setState({ searchfield: event.target.value })
+  }
+
+  clickChangePage = (event) => {
+    this.setState({ currentPage: event.target.id})
+  }
+
+
+
+
+
+
+
+  render() {
+    const searchedCliente = this.state.database.data.filter(e => {
+      return e.cliente.includes(this.state.searchfield)
+    })
+
+    const searchedOs = this.state.database.data.filter(e => {
+      return e.os.includes(this.state.searchfield)
+    })
+
+    const searchedStatus = this.state.database.data.filter(e => {
+      return e.status.includes(this.state.searchfield)
+    })
+
+    const concatDatabase = searchedCliente.concat(searchedOs, searchedStatus)
+    const finalDatabase = [...new Set(concatDatabase)]
+
+
+    if (this.state.currentPage === 'main') {
+      return (
+        <div>
+          < Main />
+        </div>
+        // <div>
+        //   <div>
+        //     <Header change={this.onSearchChange} onClick={this.clickChangePage} />
+        //   </div>
+
+        //   <div className="fl w-third pa2">
+        //     <Orcamento database={finalDatabase} />
+        //   </div>
+        //   <div className="fl w-third pa2">
+        //     <Pendente database={finalDatabase} />
+        //   </div>
+        //   <div className="fl w-third pa2">
+        //     <Aprovado database={finalDatabase} />
+        //   </div>
+        // </div>
+      )
+    } else if (this.state.currentPage === 'lancar') {
+      return (
+        <div>
+          <div>
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} />
+          </div>
+        </div>
+      )
+    } else if (this.state.currentPage === 'lista') {
+      return (
+        <div>
+          <div>
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} />
+          </div>
+        </div>
+      )
+    } else if (this.state.currentPage === 'concluidas') {
+      return (
+        <div>
+          <div>
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} />
+          </div>
+        </div>
+      )
+    }
+  }
+}
+
+
+export default App
+
+
