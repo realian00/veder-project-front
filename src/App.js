@@ -8,9 +8,11 @@ import Login from "./Login/Login";
 import WrongPassword from "./WrongPassword/WrongPassword";
 import ServerResponse from "./ServerResponse/ServerResponse";
 import { io } from "socket.io-client";
+import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
 
 import './App.css'
+import 'react-pro-sidebar/dist/css/styles.css';
 import "tachyons"
 
 
@@ -139,8 +141,8 @@ class App extends Component {
   }
 
   clickReturn = () => {
-    this.setState({ currentPage: 'main'})
-    this.setState({ serverResponse: ''})
+    this.setState({ currentPage: 'main' })
+    this.setState({ serverResponse: '' })
   }
 
 
@@ -164,7 +166,7 @@ class App extends Component {
       }).then(response => response.json()
       ).then((response) => {
         this.callDatabase()
-        this.setState({ serverResponse: response})
+        this.setState({ serverResponse: response })
         this.setState({ currentPage: 'serverResponse' })
       })
   }
@@ -182,7 +184,7 @@ class App extends Component {
       }).then(response => response.json()
       ).then((response) => {
         this.callDatabase()
-        this.setState({ serverResponse: response})
+        this.setState({ serverResponse: response })
         this.setState({ currentPage: 'serverResponse' })
       })
   }
@@ -199,27 +201,27 @@ class App extends Component {
         headers: { "Content-Type": "application/json" },
         body: body
       }).then((response) => response.json()
-        ).then((response) => {
-          this.setState({ serverResponse: response})
-          this.setState({ currentPage: 'serverResponse' })
-        }).then(() => {
-          this.callDatabase()
-        })
+      ).then((response) => {
+        this.setState({ serverResponse: response })
+        this.setState({ currentPage: 'serverResponse' })
+      }).then(() => {
+        this.callDatabase()
+      })
   }
 
   updateDb = () => {
     if (this.state.timeout === 0) {
       this.callDatabase()
       this.setState({ timeout: 10 })
-    }  
+    }
   }
 
   render() {
-    
+
     socket.once("update", (arg) => {
 
       setTimeout(() => {
-        this.setState({ timeout: 0})
+        this.setState({ timeout: 0 })
       }, 500);
       this.updateDb()
 
@@ -248,7 +250,16 @@ class App extends Component {
     if (this.state.currentPage === 'main') {
       return (
         <div>
-          <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
+          <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
+          <ProSidebar>
+            <Menu iconShape="square">
+              <MenuItem>Dashboard</MenuItem>
+              <SubMenu title="Components">
+                <MenuItem>Component 1</MenuItem>
+                <MenuItem>Component 2</MenuItem>
+              </SubMenu>
+            </Menu>
+          </ProSidebar>;
           <Main finalDatabase={finalDatabase} onClick={this.clickList} />
         </div>
       )
@@ -256,8 +267,8 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
-            <Lancar serverAddress={serverAddress}/>
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
+            <Lancar serverAddress={serverAddress} />
           </div>
         </div>
       )
@@ -265,8 +276,8 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
-            <Concluidas database={finalDatabase} onClick={this.clickList}/>
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
+            <Concluidas database={finalDatabase} onClick={this.clickList} />
           </div>
         </div>
       )
@@ -274,7 +285,7 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
             <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} />
           </div>
         </div>
@@ -299,7 +310,7 @@ class App extends Component {
       return (
         <div>
           <div>
-          <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
             <ServerResponse response={this.state.serverResponse} onClick={this.clickReturn} />
           </div>
         </div>
