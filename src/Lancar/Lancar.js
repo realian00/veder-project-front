@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import './Lancar.css'
 
-const serverAddress = 'https://gcloudservice.biz:3004'
 
 class Lancar extends Component {
     
@@ -18,7 +17,8 @@ class Lancar extends Component {
             produto: '',
             status: 'orcamento',
             obs: '',
-            serverStatus: ''
+            serverStatus: '',
+            serverAddress: props.serverAddress
         }
     }
     
@@ -41,7 +41,7 @@ class Lancar extends Component {
 
     enviar = (event) => {
         const enviarData = { entrada: this.state.entrada, orcamento: this.state.orcamento, aprovado: this.state.aprovado, concluido: '', cliente: this.state.cliente, os: this.state.os, nf: this.state.nf, produto: this.state.produto, status: this.state.status, obs: this.state.obs }
-        fetch(`${serverAddress}/postcard`,
+        fetch(`${this.state.serverAddress}/postcard`,
             {
                 method: "POST",
                 body: JSON.stringify(enviarData),

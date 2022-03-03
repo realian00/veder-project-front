@@ -256,7 +256,7 @@ class App extends Component {
         <div>
           <div>
             <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
-            <Lancar />
+            <Lancar serverAddress={serverAddress}/>
           </div>
         </div>
       )
