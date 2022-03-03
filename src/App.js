@@ -10,6 +10,8 @@ import ServerResponse from "./ServerResponse/ServerResponse";
 import { io } from "socket.io-client";
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
+import Aside from "./Aside.js"
+
 
 import './App.css'
 import 'react-pro-sidebar/dist/css/styles.css';
@@ -43,9 +45,9 @@ class App extends Component {
   callDatabase = (event) => {
     let requisition = { db: 'data', col: 'mainCards' }
     if (event !== undefined) {
-      if (event.target.id !== 'concluidas') {
+      if (event !== 'concluidas') {
         requisition = { db: 'data', col: 'mainCards' }
-      } else if (event.target.id === 'concluidas') {
+      } else if (event === 'concluidas') {
         requisition = { db: 'concluido', col: 'cards' }
       }
     }
@@ -123,11 +125,21 @@ class App extends Component {
 
 
 
-  clickChangePage = (event) => {
-
-    this.callDatabase(event)
+  clickChangePageMain = (event) => {
+    this.callDatabase('main')
     this.setState({ searchfield: '' })
-    this.setState({ currentPage: event.target.id })
+    this.setState({ currentPage: 'main' })
+  }
+
+  clickChangePageLancar = (event) => {
+    this.setState({ searchfield: '' })
+    this.setState({ currentPage: 'lancar' })
+  }
+
+  clickChangePageConcluidas = (event) => {
+    this.callDatabase('concluidas')
+    this.setState({ searchfield: '' })
+    this.setState({ currentPage: 'concluidas' })
   }
 
   clickList = (event) => {
@@ -216,6 +228,12 @@ class App extends Component {
     }
   }
 
+
+  test = () => {
+    // ProSidebar.collapsed = true
+    console.log(ProSidebar)
+  }
+
   render() {
 
     socket.once("update", (arg) => {
@@ -251,16 +269,10 @@ class App extends Component {
       return (
         <div>
           <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
-          <ProSidebar>
-            <Menu iconShape="square">
-              <MenuItem>Dashboard</MenuItem>
-              <SubMenu title="Components">
-                <MenuItem>Component 1</MenuItem>
-                <MenuItem>Component 2</MenuItem>
-              </SubMenu>
-            </Menu>
-          </ProSidebar>;
-          <Main finalDatabase={finalDatabase} onClick={this.clickList} />
+          <div className="flex">
+            <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+            <Main finalDatabase={finalDatabase} onClick={this.clickList} />
+          </div>
         </div>
       )
     } else if (this.state.currentPage === 'lancar') {
@@ -268,7 +280,10 @@ class App extends Component {
         <div>
           <div>
             <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
-            <Lancar serverAddress={serverAddress} />
+            <div className="flex">
+              <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+              <Lancar serverAddress={serverAddress} />
+            </div>
           </div>
         </div>
       )
@@ -277,7 +292,10 @@ class App extends Component {
         <div>
           <div>
             <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
-            <Concluidas database={finalDatabase} onClick={this.clickList} />
+            <div className="flex">
+              <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+              <Concluidas database={finalDatabase} onClick={this.clickList} />
+            </div>
           </div>
         </div>
       )
@@ -286,7 +304,10 @@ class App extends Component {
         <div>
           <div>
             <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
-            <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} />
+            <div className="flex">
+              <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+              <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} />
+            </div>
           </div>
         </div>
       )
@@ -311,7 +332,10 @@ class App extends Component {
         <div>
           <div>
             <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
-            <ServerResponse response={this.state.serverResponse} onClick={this.clickReturn} />
+            <div className="flex">
+              <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+              <ServerResponse response={this.state.serverResponse} onClick={this.clickReturn} />
+            </div>
           </div>
         </div>
       )

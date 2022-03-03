@@ -32,14 +32,14 @@ class Main extends Component {
 
     return (
       
-      <div className="">
-        <div className="fl w-third pa2">
+      <div className="w-100 center flex">
+        <div className="w-third pa2">
           <Orcamento database={dbOrcamento} click={this.props.onClick} />
         </div>
-        <div className="fl w-third pa2">
+        <div className="w-third pa2">
           <Pendente database={dbPendente} click={this.props.onClick} />
         </div>
-        <div className="fl w-third pa2">
+        <div className="w-third pa2">
           <Aprovado database={dbAprovado} click={this.props.onClick} />
         </div>
       </div>

@@ -42,7 +42,7 @@ class Concluidas extends Component {
             }
         })
         return (
-            <div className="flex flex-wrap backConcluidas ma1 br3">
+            <div className="flex flex-wrap backConcluidas ma1 br3 w-100">
                 <div>
                 <p className="mb1 ml2"><strong>Início:</strong></p>
                 <input className="ma2 br2 pa1" type='date' onChange={this.handleInicio}></input>
