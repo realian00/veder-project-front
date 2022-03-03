@@ -3,11 +3,12 @@ import './Login.css'
 
 const Login = (props) => {
     return (
-        <div className="tc ph0 ba bw0 shadow-5 br3 w-50 vh-50 center backLogin">
-            <h2 className="pa3">Login</h2>
+        <div className="tc ph0 ba bw0 shadow-5 br3 w-50 vh-75 center backLogin">
+            <h1 className="pa1">Workflow App</h1>
+            <h2>Módulo - Assistência Técnica</h2>
+            <h2 className="pt4">Login</h2>
 
             <div className="tc">
-                {/* <form> */}
                     <div className="mt3">
                         <label className="db fw4 lh-copy f5" >Usuário</label>
                         <input className="pa2 input-reset ba bg-white measure" type="text" id="username" onChange={props.onChange}></input>
@@ -17,10 +18,9 @@ const Login = (props) => {
                         <input className="b pa2 input-reset ba bg-white" type="password" id="password" onChange={props.onChange}></input>
                     </div>
                     <button className="ma4 mb2 fw9 black pv2 ph3 bg-light-gray ba b--gray hover-bg-gray hover-white" onClick={props.onClick}>Login</button>
-                {/* </form> */}
+                    <div className="tr pa1">Developed by <a className="link underline blue hover-red" href="https://github.com/realian00" target="_blank">realian00</a></div>
             </div>
         </div>
     )
 }
-
 export default Login

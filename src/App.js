@@ -19,6 +19,7 @@ const serverAddress = 'https://gcloudservice.biz:3004'
 const socket = io(serverAddress, { transports: ['websocket', 'polling', 'flashsocket'] });
 // const socket = io(serverAddress, {secure: true, reconnect: true, rejectUnauthorized: false})
 
+
 class App extends Component {
   constructor(props) {
     super(props)
