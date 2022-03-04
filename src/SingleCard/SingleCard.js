@@ -48,7 +48,7 @@ class SingleCard extends Component {
                                 <p className="ma2"><strong>Concluído:</strong> {this.props.selectedCard.concluido.split('-').reverse().join('/')}</p>
                                 <p className="ma2"><strong>Produto:</strong> {this.props.selectedCard.produto}</p>
                                 <p className="ma2"><strong>Situação:</strong> {this.state.status}</p>
-                                <p className="ma2"><strong>Pendência ativa:</strong><input className="ma1" type='checkbox' checked={this.props.checked} onChange={this.props.handleCheckbox}></input></p>
+                                <p className="ma2"><strong>Pendência ativa:</strong><input className="pl2 pointer v-mid checkbox" type='checkbox' checked={this.props.checked} onChange={this.props.handleCheckbox}></input></p>
                                 <p className="ma2" ><strong>Observações:</strong></p>
                                 <textarea className="w-100 pa2 br2 mb2 vh-25" defaultValue={this.props.selectedCard.obs} onChange={this.props.handleUpdateObs}></textarea>
                             </div>

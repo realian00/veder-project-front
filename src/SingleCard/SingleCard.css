@@ -11,3 +11,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4e4ef', end
 .fontSingleCard {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
+.checkbox {
+    margin: auto auto;
+      /* Double-sized Checkboxes */
+  -ms-transform: scale(1.3); /* IE */
+  -moz-transform: scale(1.3); /* FF */
+  -webkit-transform: scale(1.3); /* Safari and Chrome */
+  -o-transform: scale(1.3); /* Opera */
+  transform: scale(1.3);
+  margin-left: 5px;
+}

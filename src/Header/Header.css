@@ -22,3 +22,14 @@ background: linear-gradient(90deg, rgba(52,186,106,1) 0%, rgba(69,154,68,1) 49%,
 .logMarg {
     margin-left: auto;
 }
+
+.checkbox {
+    margin: auto auto;
+      /* Double-sized Checkboxes */
+  -ms-transform: scale(1.5); /* IE */
+  -moz-transform: scale(1.5); /* FF */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  transform: scale(1.5);
+  margin-left: 5px;
+}
