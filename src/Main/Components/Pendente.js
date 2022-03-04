@@ -17,7 +17,7 @@ const Pendente = (props) => {
 
         <ul className="list p10 ph0 ma3">
           {filteredDatabase.map((item, i) => (
-            <li className="grow pointer" key={item._id}><Card id={item._id} key={item._id} cliente={item.cliente} os={item.os} nf={item.nf} entrada={item.entrada} orcamento={item.orcamento} aprovado={item.aprovado} status={item.status} produto={item.produto} obs={item.obs} onClick={props.click} /></li>
+            <li className="grow pointer" key={item._id}><Card id={item._id} key={item._id} cliente={item.cliente} os={item.os} nf={item.nf} entrada={item.entrada} orcamento={item.orcamento} aprovado={item.aprovado} status={item.status} produto={item.produto} obs={item.obs} pendencia={item.pendencia} onClick={props.click} /></li>
           ))}
         </ul>
       </div>
