@@ -37,6 +37,8 @@ class App extends Component {
       password: '',
       loggedUser: 'none',
       updateObs: { newValue: '' },
+      checked: false,
+      showPending: true,
       serverResponse: '',
       timeout: 0
     }
@@ -145,6 +147,7 @@ class App extends Component {
   clickList = (event) => {
     return this.state.database.map((item, i) => {
       if (item._id === event.target.id || item._id === event.target.parentElement.id) {
+        this.setState({ checked: item.pendencia })
         this.setState({ singleCardData: item })
         this.setState({ updateObs: { newValue: item.obs } })
         return this.setState({ currentPage: 'singleCard' })
@@ -184,7 +187,8 @@ class App extends Component {
   }
 
   enviar = () => {
-    const updateObs = Object.assign(this.state.singleCardData, this.state.updateObs)
+    const sendPendencia = { pendencia: this.state.checked }
+    const updateObs = Object.assign(this.state.singleCardData, this.state.updateObs, sendPendencia)
     const body = JSON.stringify(updateObs)
 
     return fetch(`${serverAddress}/enviar`,
@@ -203,7 +207,8 @@ class App extends Component {
 
 
   atualizar = () => {
-    const updateObs = Object.assign(this.state.singleCardData, this.state.updateObs)
+    const sendPendencia = { pendencia: this.state.checked }
+    const updateObs = Object.assign(this.state.singleCardData, this.state.updateObs, sendPendencia)
     const body = JSON.stringify(updateObs)
 
     return fetch(`${serverAddress}/atualizar`,
@@ -221,6 +226,16 @@ class App extends Component {
       })
   }
 
+
+  handleCheckbox = () => {
+    if (this.state.checked === false) {
+      this.setState({ checked: true })
+    } else if (this.state.checked === true) {
+      this.setState({ checked: false })
+    }
+  }
+
+
   updateDb = () => {
     if (this.state.timeout === 0) {
       this.callDatabase()
@@ -229,10 +244,16 @@ class App extends Component {
   }
 
 
-  test = () => {
-    // ProSidebar.collapsed = true
-    console.log(ProSidebar)
+  changePending = () => {
+    if (this.state.showPending === true) {
+      this.setState({ showPending: false })
+    } else {
+      this.setState({ showPending: true })
+    }
   }
+
+
+
 
   render() {
 
@@ -245,30 +266,42 @@ class App extends Component {
 
     })
 
-    const searchedCliente = this.state.database.filter(e => {
+    const searchedPendencia = this.state.database.filter(e => {
+      if (this.state.showPending === false) {
+        return e.pendencia === this.state.showPending
+      } else {
+        return e
+      }
+        
+    })
+
+
+    const searchedCliente = searchedPendencia.filter(e => {
       return e.cliente.toLowerCase().includes(this.state.searchfield.toLowerCase())
     })
 
-    const searchedOs = this.state.database.filter(e => {
+    const searchedOs = searchedPendencia.filter(e => {
       return e.os.toLowerCase().includes(this.state.searchfield.toLowerCase())
     })
 
-    const searchedNf = this.state.database.filter(e => {
+    const searchedNf = searchedPendencia.filter(e => {
       return e.nf.toLowerCase().includes(this.state.searchfield.toLowerCase())
     })
 
-    const searchedProduto = this.state.database.filter(e => {
+    const searchedProduto = searchedPendencia.filter(e => {
       return e.produto.toLowerCase().includes(this.state.searchfield.toLowerCase())
     })
+
+
+
 
     const concatDatabase = searchedCliente.concat(searchedOs, searchedNf, searchedProduto)
     const finalDatabase = [...new Set(concatDatabase)]
 
-
     if (this.state.currentPage === 'main') {
       return (
         <div>
-          <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
+          <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
           <div className="flex">
             <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
             <Main finalDatabase={finalDatabase} onClick={this.clickList} />
@@ -279,7 +312,7 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
             <div className="flex">
               <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
               <Lancar serverAddress={serverAddress} />
@@ -291,7 +324,7 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
             <div className="flex">
               <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
               <Concluidas database={finalDatabase} onClick={this.clickList} />
@@ -303,10 +336,10 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
             <div className="flex">
               <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
-              <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} />
+              <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} handleCheckbox={this.handleCheckbox} checked={this.state.checked} />
             </div>
           </div>
         </div>
@@ -331,7 +364,7 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} />
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
             <div className="flex">
               <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
               <ServerResponse response={this.state.serverResponse} onClick={this.clickReturn} />

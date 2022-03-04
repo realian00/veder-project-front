@@ -3,6 +3,7 @@ import './Header.css'
 import logo from './logo-dark.png'
 
 function Header(props) {
+  console.log(props.showPending)
     return (
       <div className="flex flex-wrap ma0 headBar dtc v-mid tc shadow-5" >
         <div className="dtc v-mid tc marg pr5 flex">
@@ -16,6 +17,8 @@ function Header(props) {
         <div className=" fl w-50 marg">
           <input className="w-100 pa2 br2" type='search' placeholder="buscar cliente, OS, NF ou produto" onChange={props.change} value={props.searchfield}></input>
         </div>
+
+        <div className="dtc v-mid tc marg pl5 flex white">Exibir Pendências: <input className="pa2" type='checkbox' onChange={props.changePending} checked={props.showPending}></input></div>
 {/* 
         <div className="pa0 tc justify-end logMarg pt2">
           <p className="ma0 pa2 white">{`Usuário: ${props.username}`}</p>
