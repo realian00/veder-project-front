@@ -3,7 +3,6 @@ import './Header.css'
 import logo from './logo-dark.png'
 
 function Header(props) {
-  console.log(props.showPending)
     return (
       <div className="flex flex-wrap ma0 headBar dtc v-mid tc shadow-5" >
         <div className="dtc v-mid tc marg pr5 flex">

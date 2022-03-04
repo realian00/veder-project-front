@@ -119,6 +119,7 @@ class App extends Component {
   }
 
   handleLogout = () => {
+    this.setState({ showPending: true })
     this.setState({ username: '' })
     this.setState({ password: '' })
     return this.setState({ currentPage: 'login' })
