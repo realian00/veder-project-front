@@ -34,10 +34,9 @@ const Card = (props) => {
 
     return (
 
-        <div className={`fontCard tc ba br4 mb2 ${resultCss}`} id={props.id} onClick={props.onClick} >
-            <p className="ma2" id={props.id}><strong>Cliente:</strong> {props.cliente}</p>
-            <p className="ma2" id={props.id}><strong>OS:</strong> {props.os}</p>
-            <p className="ma2" id={props.id}><strong>NF:</strong> {props.nf}</p>
+        <div className={`fontCard ba br4 mb2 ${resultCss}`} id={props.id} onClick={props.onClick} >
+            <p className="ma2" id={props.id}><strong>Cliente:</strong> {props.cliente} <span className={props.pendencia ? 'show' : 'hide'}></span></p>
+            <p className="ma2" id={props.id}><strong>OS:</strong> {props.os} <span className="ma2"><strong>NF:</strong> {props.nf}</span></p> 
             <p className="ma2" id={props.id}><strong>Entrada:</strong> {props.entrada.split('-').reverse().join('/')}</p>
             <p className="ma2" id={props.id}><strong>Orçamento:</strong> {props.orcamento.split('-').reverse().join('/')}</p>
             <p className="ma2" id={props.id}><strong>Aprovado:</strong> {props.aprovado.split('-').reverse().join('/')}</p>
