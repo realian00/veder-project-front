@@ -40,7 +40,7 @@ class App extends Component {
       checked: false,
       showPending: true,
       serverResponse: '',
-      timeout: 0
+      timeout: 0,
     }
   }
 
@@ -72,6 +72,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    window.requestAnimationFrame(() => this.setState({ mounted: true }))
     return this.callDatabase()
   }
 

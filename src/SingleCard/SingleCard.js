@@ -7,6 +7,8 @@ class SingleCard extends Component {
         this.state = {
             telaConfirma: 'none',
             status: this.props.selectedCard.status,
+
+            mounted: false
         }
     }
 
@@ -20,6 +22,7 @@ class SingleCard extends Component {
     }
 
     componentDidMount() {
+        window.requestAnimationFrame(() => this.setState({ mounted: true }))
         if (this.props.selectedCard.status === 'orcamento') {
             this.setState({ status: 'Aguardando orçamento' })
         } else if (this.props.selectedCard.status === 'pendente') {

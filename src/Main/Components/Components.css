@@ -12,3 +12,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4e4ef', end
     background: rgb(224,224,224);
 background: linear-gradient(90deg, rgba(224,224,224,1) 0%, rgba(205,227,225,1) 49%, rgba(138,166,172,1) 100%);
 }
+
+.App {
+    transform-origin: top center;
+    transform: translateY(100%);
+    transition: transform 0.7s;
+  }
+  
+  .App.enter {
+    transform: translateY(0);
+    transition: transform 0.7s;
+  }
