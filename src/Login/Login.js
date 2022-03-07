@@ -3,7 +3,7 @@ import './Login.css'
 
 const Login = (props) => {
     return (
-        <div className="tc ph0 ba bw0 shadow-5 br3 w-50 vh-75 center backLogin">
+        <div className="tc ph0 ba bw0 shadow-5 br3 w-50 vh-75 center backLogin" onKeyPress={props.onEnter}>
             <h1 className="pa1">Workflow App</h1>
             <h2>Módulo - Assistência Técnica</h2>
             <h2 className="pt4">Login</h2>

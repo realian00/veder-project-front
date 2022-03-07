@@ -88,7 +88,17 @@ class App extends Component {
     }
   }
 
-  temporaryLoginHandle = (event) => {
+  onEnter = (event) => {
+    if (event.key === 'Enter') {
+      if (this.state.currentPage === 'login') {
+        this.temporaryLoginHandle()
+      } else if (this.state.currentPage === 'wrongPassword') {
+        this.wrongPassword()
+      }
+    }
+  }
+
+  temporaryLoginHandle = () => {
 
     const body = JSON.stringify({
       username: this.state.username,
@@ -274,7 +284,7 @@ class App extends Component {
       } else {
         return e
       }
-        
+
     })
 
 
@@ -350,7 +360,7 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Login onChange={this.onLoginChange} onClick={this.temporaryLoginHandle} />
+            <Login onChange={this.onLoginChange} onClick={this.temporaryLoginHandle} onEnter={this.onEnter} />
           </div>
         </div>
       )
