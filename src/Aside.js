@@ -30,12 +30,20 @@ class Aside extends Component {
         }
     }
 
-    open = () => {
-        this.setState({ collapsed: false })
-    }
+    // open = () => {
+    //     this.setState({ collapsed: false })
+    // }
 
-    close = () => {
-        this.setState({ collapsed: true })
+    // close = () => {
+    //     this.setState({ collapsed: true })
+    // }
+
+    handleToggleSidebar = () => {
+        if (this.state.collapsed === true) {
+            this.setState({ collapsed: false})
+        } else if (this.state.collapsed === false) {
+            this.setState({ collapsed: true})
+        }
     }
 
 
@@ -45,8 +53,8 @@ class Aside extends Component {
 
                 collapsed={this.state.collapsed}
 
-                onMouseEnter={this.open}
-                onMouseLeave={this.close}
+                // onMouseEnter={this.open}
+                // onMouseLeave={this.close}
             >
                 <SidebarHeader>
                     <div
@@ -62,7 +70,7 @@ class Aside extends Component {
                         }}
                     >
                         <Menu iconShape="circle">
-                            <MenuItem icon={<FaList />} > Menu</MenuItem>
+                            <MenuItem icon={<FaList />} onClick={this.handleToggleSidebar}> Menu</MenuItem>
                         </Menu>
 
                     </div>
