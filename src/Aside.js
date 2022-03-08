@@ -3,14 +3,12 @@ import {
     ProSidebar,
     Menu,
     MenuItem,
-    SubMenu,
     SidebarHeader,
     SidebarFooter,
     SidebarContent
 } from "react-pro-sidebar";
 import {
     FaList,
-    FaGithub,
     FaHome,
     FaPaperclip,
     FaPoll,
@@ -30,21 +28,16 @@ class Aside extends Component {
         }
     }
 
-    // open = () => {
-    //     this.setState({ collapsed: false })
-    // }
-
-    // close = () => {
-    //     this.setState({ collapsed: true })
-    // }
-
-    handleToggleSidebar = () => {
-        if (this.state.collapsed === true) {
-            this.setState({ collapsed: false})
-        } else if (this.state.collapsed === false) {
-            this.setState({ collapsed: true})
-        }
+    open = () => {
+        setTimeout(() => {
+         this.setState({ collapsed: false })   
+        }, 750);
     }
+
+    close = () => {      
+            this.setState({ collapsed: true })   
+       }
+
 
 
     render() {
@@ -53,8 +46,8 @@ class Aside extends Component {
 
                 collapsed={this.state.collapsed}
 
-                // onMouseEnter={this.open}
-                // onMouseLeave={this.close}
+                onMouseEnter={this.open}
+                onMouseLeave={this.close}
             >
                 <SidebarHeader>
                     <div
@@ -70,7 +63,7 @@ class Aside extends Component {
                         }}
                     >
                         <Menu iconShape="circle">
-                            <MenuItem icon={<FaList />} onClick={this.handleToggleSidebar}> Menu</MenuItem>
+                            <MenuItem icon={<FaList />}> Menu</MenuItem>
                         </Menu>
 
                     </div>
