@@ -15,6 +15,9 @@ import {
 } from "react-icons/fa";
 
 
+
+
+
 class Aside extends Component {
 
     constructor(props) {
@@ -24,21 +27,25 @@ class Aside extends Component {
             collapsed: true,
             rtl: '',
             toggled: '',
-            handleToggleSidebar: ''
+            timeout: () => { setTimeout(this.handleOpen, 750) }
         }
     }
 
-    open = () => {
-        setTimeout(() => {
-         this.setState({ collapsed: false })   
-        }, 750);
+    handleOpen = () => {
+        if (this.state.toggled === 'open') {
+            this.setState({ collapsed: false })
+        }
     }
 
-    close = () => {      
-            this.setState({ collapsed: true })   
-       }
-
-
+    handleToggleSidebar = (event) => {
+        if (event._reactName === 'onMouseEnter') {
+            this.setState({ toggled: 'open'})
+            this.state.timeout()
+        } else if (event._reactName === 'onMouseLeave') {
+            this.setState({ toggled: 'close' })
+            this.setState({ collapsed: true })
+        }
+    }
 
     render() {
         return (
@@ -46,8 +53,8 @@ class Aside extends Component {
 
                 collapsed={this.state.collapsed}
 
-                onMouseEnter={this.open}
-                onMouseLeave={this.close}
+                onMouseEnter={this.handleToggleSidebar}
+                onMouseLeave={this.handleToggleSidebar}
             >
                 <SidebarHeader>
                     <div
