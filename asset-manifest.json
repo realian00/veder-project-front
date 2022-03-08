@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/veder-project-front/static/css/main.f0a10937.css",
-    "main.js": "/veder-project-front/static/js/main.30fa5c36.js",
+    "main.js": "/veder-project-front/static/js/main.065b4c6b.js",
     "index.html": "/veder-project-front/index.html",
     "main.f0a10937.css.map": "/veder-project-front/static/css/main.f0a10937.css.map",
-    "main.30fa5c36.js.map": "/veder-project-front/static/js/main.30fa5c36.js.map"
+    "main.065b4c6b.js.map": "/veder-project-front/static/js/main.065b4c6b.js.map"
   },
   "entrypoints": [
     "static/css/main.f0a10937.css",
-    "static/js/main.30fa5c36.js"
+    "static/js/main.065b4c6b.js"
   ]
 }
