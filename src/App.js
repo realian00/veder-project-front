@@ -285,6 +285,13 @@ class App extends Component {
       this.updateDb()
     })
 
+    socket.on('reconnect', () => {
+      setTimeout(() => {
+        this.setState({ timeout: 0 })
+      }, 500);
+      this.updateDb()
+    })
+
     const searchedPendencia = this.state.database.filter(e => {
       if (this.state.showPending === false) {
         return e.pendencia === this.state.showPending
