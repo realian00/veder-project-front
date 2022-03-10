@@ -6,7 +6,9 @@ class SingleCard extends Component {
         super(props)
         this.state = {
             telaConfirma: 'none',
-            status: this.props.selectedCard.status
+            status: this.props.selectedCard.status,
+
+            mounted: false
         }
     }
 
@@ -20,6 +22,7 @@ class SingleCard extends Component {
     }
 
     componentDidMount() {
+        window.requestAnimationFrame(() => this.setState({ mounted: true }))
         if (this.props.selectedCard.status === 'orcamento') {
             this.setState({ status: 'Aguardando orçamento' })
         } else if (this.props.selectedCard.status === 'pendente') {
@@ -30,6 +33,7 @@ class SingleCard extends Component {
             this.setState({ status: 'Concluído' })
         }
     }
+
 
         render() {
             if (this.state.telaConfirma === 'none') {
@@ -47,6 +51,7 @@ class SingleCard extends Component {
                                 <p className="ma2"><strong>Concluído:</strong> {this.props.selectedCard.concluido.split('-').reverse().join('/')}</p>
                                 <p className="ma2"><strong>Produto:</strong> {this.props.selectedCard.produto}</p>
                                 <p className="ma2"><strong>Situação:</strong> {this.state.status}</p>
+                                <p className="ma2"><strong>Pendência ativa:</strong><input className="pl2 pointer v-mid checkbox" type='checkbox' checked={this.props.checked} onChange={this.props.handleCheckbox}></input></p>
                                 <p className="ma2" ><strong>Observações:</strong></p>
                                 <textarea className="w-100 pa2 br2 mb2 vh-25" defaultValue={this.props.selectedCard.obs} onChange={this.props.handleUpdateObs}></textarea>
                             </div>

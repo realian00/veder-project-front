@@ -8,9 +8,13 @@ import Login from "./Login/Login";
 import WrongPassword from "./WrongPassword/WrongPassword";
 import ServerResponse from "./ServerResponse/ServerResponse";
 import { io } from "socket.io-client";
+import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+
+import Aside from "./Aside.js"
 
 
 import './App.css'
+import 'react-pro-sidebar/dist/css/styles.css';
 import "tachyons"
 
 
@@ -33,17 +37,19 @@ class App extends Component {
       password: '',
       loggedUser: 'none',
       updateObs: { newValue: '' },
+      checked: false,
+      showPending: true,
       serverResponse: '',
-      timeout: 0
+      timeout: 0,
     }
   }
 
   callDatabase = (event) => {
     let requisition = { db: 'data', col: 'mainCards' }
     if (event !== undefined) {
-      if (event.target.id !== 'concluidas') {
+      if (event !== 'concluidas') {
         requisition = { db: 'data', col: 'mainCards' }
-      } else if (event.target.id === 'concluidas') {
+      } else if (event === 'concluidas') {
         requisition = { db: 'concluido', col: 'cards' }
       }
     }
@@ -66,6 +72,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    window.requestAnimationFrame(() => this.setState({ mounted: true }))
     return this.callDatabase()
   }
 
@@ -81,7 +88,17 @@ class App extends Component {
     }
   }
 
-  temporaryLoginHandle = (event) => {
+  onEnter = (event) => {
+    if (event.key === 'Enter') {
+      if (this.state.currentPage === 'login') {
+        this.temporaryLoginHandle()
+      } else if (this.state.currentPage === 'wrongPassword') {
+        this.wrongPassword()
+      }
+    }
+  }
+
+  temporaryLoginHandle = () => {
 
     const body = JSON.stringify({
       username: this.state.username,
@@ -113,6 +130,7 @@ class App extends Component {
   }
 
   handleLogout = () => {
+    this.setState({ showPending: true })
     this.setState({ username: '' })
     this.setState({ password: '' })
     return this.setState({ currentPage: 'login' })
@@ -121,16 +139,27 @@ class App extends Component {
 
 
 
-  clickChangePage = (event) => {
-
-    this.callDatabase(event)
+  clickChangePageMain = (event) => {
+    this.callDatabase('main')
     this.setState({ searchfield: '' })
-    this.setState({ currentPage: event.target.id })
+    this.setState({ currentPage: 'main' })
+  }
+
+  clickChangePageLancar = (event) => {
+    this.setState({ searchfield: '' })
+    this.setState({ currentPage: 'lancar' })
+  }
+
+  clickChangePageConcluidas = (event) => {
+    this.callDatabase('concluidas')
+    this.setState({ searchfield: '' })
+    this.setState({ currentPage: 'concluidas' })
   }
 
   clickList = (event) => {
     return this.state.database.map((item, i) => {
       if (item._id === event.target.id || item._id === event.target.parentElement.id) {
+        this.setState({ checked: item.pendencia })
         this.setState({ singleCardData: item })
         this.setState({ updateObs: { newValue: item.obs } })
         return this.setState({ currentPage: 'singleCard' })
@@ -139,8 +168,8 @@ class App extends Component {
   }
 
   clickReturn = () => {
-    this.setState({ currentPage: 'main'})
-    this.setState({ serverResponse: ''})
+    this.setState({ currentPage: 'main' })
+    this.setState({ serverResponse: '' })
   }
 
 
@@ -164,13 +193,14 @@ class App extends Component {
       }).then(response => response.json()
       ).then((response) => {
         this.callDatabase()
-        this.setState({ serverResponse: response})
+        this.setState({ serverResponse: response })
         this.setState({ currentPage: 'serverResponse' })
       })
   }
 
   enviar = () => {
-    const updateObs = Object.assign(this.state.singleCardData, this.state.updateObs)
+    const sendPendencia = { pendencia: this.state.checked }
+    const updateObs = Object.assign(this.state.singleCardData, this.state.updateObs, sendPendencia)
     const body = JSON.stringify(updateObs)
 
     return fetch(`${serverAddress}/enviar`,
@@ -182,14 +212,15 @@ class App extends Component {
       }).then(response => response.json()
       ).then((response) => {
         this.callDatabase()
-        this.setState({ serverResponse: response})
+        this.setState({ serverResponse: response })
         this.setState({ currentPage: 'serverResponse' })
       })
   }
 
 
   atualizar = () => {
-    const updateObs = Object.assign(this.state.singleCardData, this.state.updateObs)
+    const sendPendencia = { pendencia: this.state.checked }
+    const updateObs = Object.assign(this.state.singleCardData, this.state.updateObs, sendPendencia)
     const body = JSON.stringify(updateObs)
 
     return fetch(`${serverAddress}/atualizar`,
@@ -199,65 +230,119 @@ class App extends Component {
         headers: { "Content-Type": "application/json" },
         body: body
       }).then((response) => response.json()
-        ).then((response) => {
-          this.setState({ serverResponse: response})
-          this.setState({ currentPage: 'serverResponse' })
-        }).then(() => {
-          this.callDatabase()
-        })
+      ).then((response) => {
+        this.setState({ serverResponse: response })
+        this.setState({ currentPage: 'serverResponse' })
+      }).then(() => {
+        this.callDatabase()
+      })
   }
+
+
+  handleCheckbox = () => {
+    if (this.state.checked === false) {
+      this.setState({ checked: true })
+    } else if (this.state.checked === true) {
+      this.setState({ checked: false })
+    }
+  }
+
 
   updateDb = () => {
     if (this.state.timeout === 0) {
       this.callDatabase()
       this.setState({ timeout: 10 })
-    }  
+    }
   }
 
+
+  changePending = () => {
+    if (this.state.showPending === true) {
+      this.setState({ showPending: false })
+    } else {
+      this.setState({ showPending: true })
+    }
+  }
+
+
+
+
   render() {
-    
+
     socket.once("update", (arg) => {
 
       setTimeout(() => {
-        this.setState({ timeout: 0})
+        this.setState({ timeout: 0 })
       }, 500);
       this.updateDb()
 
     })
 
-    const searchedCliente = this.state.database.filter(e => {
+    socket.on('connect', () => {
+      setTimeout(() => {
+        this.setState({ timeout: 0 })
+      }, 500);
+      this.updateDb()
+    })
+
+    socket.on('reconnect', () => {
+      setTimeout(() => {
+        this.setState({ timeout: 0 })
+      }, 500);
+      this.updateDb()
+    })
+
+    const searchedPendencia = this.state.database.filter(e => {
+      if (this.state.showPending === false) {
+        return e.pendencia === this.state.showPending
+      } else {
+        return e
+      }
+
+    })
+
+
+    const searchedCliente = searchedPendencia.filter(e => {
       return e.cliente.toLowerCase().includes(this.state.searchfield.toLowerCase())
     })
 
-    const searchedOs = this.state.database.filter(e => {
+    const searchedOs = searchedPendencia.filter(e => {
       return e.os.toLowerCase().includes(this.state.searchfield.toLowerCase())
     })
 
-    const searchedNf = this.state.database.filter(e => {
+    const searchedNf = searchedPendencia.filter(e => {
       return e.nf.toLowerCase().includes(this.state.searchfield.toLowerCase())
     })
 
-    const searchedProduto = this.state.database.filter(e => {
+    const searchedProduto = searchedPendencia.filter(e => {
       return e.produto.toLowerCase().includes(this.state.searchfield.toLowerCase())
     })
+
+
+
 
     const concatDatabase = searchedCliente.concat(searchedOs, searchedNf, searchedProduto)
     const finalDatabase = [...new Set(concatDatabase)]
 
-
     if (this.state.currentPage === 'main') {
       return (
         <div>
-          <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
-          <Main finalDatabase={finalDatabase} onClick={this.clickList} />
+          <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
+          <div className="flex">
+            <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+            <Main finalDatabase={finalDatabase} onClick={this.clickList} />
+          </div>
         </div>
       )
     } else if (this.state.currentPage === 'lancar') {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
-            <Lancar serverAddress={serverAddress}/>
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
+            <div className="flex">
+              <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+              <Lancar serverAddress={serverAddress} />
+            </div>
           </div>
         </div>
       )
@@ -265,8 +350,11 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
-            <Concluidas database={finalDatabase} onClick={this.clickList}/>
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
+            <div className="flex">
+              <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+              <Concluidas database={finalDatabase} onClick={this.clickList} />
+            </div>
           </div>
         </div>
       )
@@ -274,8 +362,11 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
-            <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} />
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
+            <div className="flex">
+              <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+              <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} handleCheckbox={this.handleCheckbox} checked={this.state.checked} />
+            </div>
           </div>
         </div>
       )
@@ -283,7 +374,7 @@ class App extends Component {
       return (
         <div>
           <div>
-            <Login onChange={this.onLoginChange} onClick={this.temporaryLoginHandle} />
+            <Login onChange={this.onLoginChange} onClick={this.temporaryLoginHandle} onEnter={this.onEnter} />
           </div>
         </div>
       )
@@ -299,8 +390,11 @@ class App extends Component {
       return (
         <div>
           <div>
-          <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield}/>
-            <ServerResponse response={this.state.serverResponse} onClick={this.clickReturn} />
+            <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
+            <div className="flex">
+              <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
+              <ServerResponse response={this.state.serverResponse} onClick={this.clickReturn} />
+            </div>
           </div>
         </div>
       )

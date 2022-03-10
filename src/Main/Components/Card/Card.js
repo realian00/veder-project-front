@@ -22,11 +22,11 @@ const Card = (props) => {
     const hourResultAprovado = (actualhour - hoursAprovado) / 24
 
 
-    if (hourResultEntrada > 10 && props.status === 'orcamento') {
+    if (hourResultEntrada > 5 && props.status === 'orcamento') {
         resultCss = 'bg-light-red'
-    } else if (hourResultOrcamento > 10 && props.status === 'pendente'){
+    } else if (hourResultOrcamento > 15 && props.status === 'pendente'){
         resultCss = 'bg-light-red'
-    } else if (hourResultAprovado > 10 && props.status === 'aprovado'){
+    } else if (hourResultAprovado > 3 && props.status === 'aprovado'){
         resultCss = 'bg-light-red'
     } else {
         resultCss = 'bg-light-gray'
@@ -34,10 +34,9 @@ const Card = (props) => {
 
     return (
 
-        <div className={`fontCard tc ba br4 mb2 ${resultCss}`} id={props.id} onClick={props.onClick} >
-            <p className="ma2" id={props.id}><strong>Cliente:</strong> {props.cliente}</p>
-            <p className="ma2" id={props.id}><strong>OS:</strong> {props.os}</p>
-            <p className="ma2" id={props.id}><strong>NF:</strong> {props.nf}</p>
+        <div className={`fontCard ba br4 mb2 ${resultCss}`} id={props.id} onClick={props.onClick} >
+            <p className="ma2" id={props.id}><strong>Cliente:</strong> {props.cliente} <span className={props.pendencia ? 'show' : 'hide'}></span></p>
+            <p className="ma2" id={props.id}><strong>OS:</strong> {props.os} <span className="ma2"><strong>NF:</strong> {props.nf}</span></p> 
             <p className="ma2" id={props.id}><strong>Entrada:</strong> {props.entrada.split('-').reverse().join('/')}</p>
             <p className="ma2" id={props.id}><strong>Orçamento:</strong> {props.orcamento.split('-').reverse().join('/')}</p>
             <p className="ma2" id={props.id}><strong>Aprovado:</strong> {props.aprovado.split('-').reverse().join('/')}</p>

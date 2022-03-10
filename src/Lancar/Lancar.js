@@ -16,6 +16,7 @@ class Lancar extends Component {
             nf: '',
             produto: '',
             status: 'orcamento',
+            pendencia: false,
             obs: '',
             serverStatus: '',
             serverAddress: props.serverAddress
@@ -40,7 +41,7 @@ class Lancar extends Component {
     }
 
     enviar = (event) => {
-        const enviarData = { entrada: this.state.entrada, orcamento: this.state.orcamento, aprovado: this.state.aprovado, concluido: '', cliente: this.state.cliente, os: this.state.os, nf: this.state.nf, produto: this.state.produto, status: this.state.status, obs: this.state.obs }
+        const enviarData = { entrada: this.state.entrada, orcamento: this.state.orcamento, aprovado: this.state.aprovado, concluido: '', cliente: this.state.cliente, os: this.state.os, nf: this.state.nf, produto: this.state.produto, status: this.state.status, pendencia:this.state.pendencia, obs: this.state.obs }
         fetch(`${this.state.serverAddress}/postcard`,
             {
                 method: "POST",
