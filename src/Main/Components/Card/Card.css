@@ -9,3 +9,15 @@
     background-color: rgb(243, 6, 6);
     border-radius: 50%;
 }
+
+.showG {
+    float: right;
+    background: green;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    top: 3px;
+    right: 25px;
+  }
+

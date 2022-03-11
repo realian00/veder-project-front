@@ -22,12 +22,14 @@ const Card = (props) => {
     const hourResultAprovado = (actualhour - hoursAprovado) / 24
 
 
-    if (hourResultEntrada > 5 && props.status === 'orcamento') {
+    if (hourResultEntrada > 5 && props.status === 'orcamento' && props.garantia === false) {
         resultCss = 'bg-light-red'
-    } else if (hourResultOrcamento > 15 && props.status === 'pendente'){
+    } else if (hourResultOrcamento > 15 && props.status === 'pendente' && props.garantia === false){
         resultCss = 'bg-light-red'
-    } else if (hourResultAprovado > 3 && props.status === 'aprovado'){
+    } else if (hourResultAprovado > 3 && props.status === 'aprovado' && props.garantia === false){
         resultCss = 'bg-light-red'
+    } else if (props.garantia === true){
+        resultCss = 'bg-light-yellow'
     } else {
         resultCss = 'bg-light-gray'
     }
