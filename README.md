@@ -17,7 +17,7 @@
 
 ## About
 
-This project is my first real application, tailored to a company. Ths main idea of the app is to manage the entire workflow of a department in the company, in order to improve control, information access and management. 
+This project is my first real application, tailored to a company. The main idea of the app is to manage the entire workflow of a department in the company, in order to improve control, information access and management. 
 
 ---
 
