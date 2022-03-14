@@ -1,5 +1,5 @@
 <h1 align="center">
-   ♻️ <a href="https://realian00.github.io/veder-project-front/"> Workflow App </a>
+   <a href="https://realian00.github.io/veder-project-front/"> Workflow App </a>
 </h1>
 
 
