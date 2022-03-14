@@ -7,7 +7,7 @@ import Concluidas from "./Concluidas/Concluidas";
 import Login from "./Login/Login";
 import WrongPassword from "./WrongPassword/WrongPassword";
 import ServerResponse from "./ServerResponse/ServerResponse";
-import Aside from "./Aside.js"
+import Aside from "./Sidebar/Aside.js"
 
 import { io } from "socket.io-client";
 
