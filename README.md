@@ -68,6 +68,7 @@ This project is a single man army effort, entirely built by me;
  <br />
  <sub><b>Renato Gianelli</b></sub></a>
  <br />
+ <br />
 
 [![Gmail Badge](https://img.shields.io/badge/-renato.gianelli@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:tgmarinho@gmail.com)](mailto:renato.gianelli@gmail.com)
 
@@ -75,6 +76,6 @@ This project is a single man army effort, entirely built by me;
 
 ## License
 
-This project is under the license [MIT](./License).
+This project is under the license [MIT](./License.txt).
 
 Made by Renato Gianeli
