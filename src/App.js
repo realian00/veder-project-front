@@ -7,21 +7,23 @@ import Concluidas from "./Concluidas/Concluidas";
 import Login from "./Login/Login";
 import WrongPassword from "./WrongPassword/WrongPassword";
 import ServerResponse from "./ServerResponse/ServerResponse";
-import { io } from "socket.io-client";
-import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-
 import Aside from "./Aside.js"
 
+import { io } from "socket.io-client";
 
 import './App.css'
 import 'react-pro-sidebar/dist/css/styles.css';
 import "tachyons"
 
-
+// -------------------------------------------------------------------------------------
+// Development server
 // const serverAddress = 'http://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3008' 
+// -------------------------------------------------------------------------------------
+
+// Connect to the server, ssl secured, and open socket port
+
 const serverAddress = 'https://gcloudservice.biz:3004'
 const socket = io(serverAddress, { transports: ['websocket', 'polling', 'flashsocket'] });
-// const socket = io(serverAddress, {secure: true, reconnect: true, rejectUnauthorized: false})
 
 
 class App extends Component {
@@ -99,12 +101,10 @@ class App extends Component {
   }
 
   temporaryLoginHandle = () => {
-
     const body = JSON.stringify({
       username: this.state.username,
       password: this.state.password
     })
-
     fetch(`${serverAddress}/users`, {
       method: 'POST',
       headers: {
@@ -123,7 +123,6 @@ class App extends Component {
         }
       })
   }
-
 
   wrongPassword = () => {
     return this.setState({ currentPage: 'login' })
@@ -156,14 +155,17 @@ class App extends Component {
     this.setState({ currentPage: 'concluidas' })
   }
 
+
+
+
   clickList = (event) => {
-    return this.state.database.map((item, i) => {
+    this.state.database.map((item, i) => {
       if (item._id === event.target.id || item._id === event.target.parentElement.id) {
         this.setState({ checked: item.pendencia })
         this.setState({ singleCardData: item })
         this.setState({ updateObs: { newValue: item.obs } })
         return this.setState({ currentPage: 'singleCard' })
-      }
+      }return event
     })
   }
 
@@ -171,7 +173,6 @@ class App extends Component {
     this.setState({ currentPage: 'main' })
     this.setState({ serverResponse: '' })
   }
-
 
   handleUpdateObs = (event) => {
     return this.setState({ updateObs: { newValue: event.target.value } })
@@ -181,9 +182,7 @@ class App extends Component {
 
 
   delete = () => {
-
     const body = JSON.stringify(this.state.singleCardData)
-
     return fetch(`${serverAddress}/delete`,
       {
         mode: 'cors',
@@ -197,6 +196,7 @@ class App extends Component {
         this.setState({ currentPage: 'serverResponse' })
       })
   }
+
 
   enviar = () => {
     const sendPendencia = { pendencia: this.state.checked }
@@ -247,15 +247,6 @@ class App extends Component {
     }
   }
 
-
-  updateDb = () => {
-    if (this.state.timeout === 0) {
-      this.callDatabase()
-      this.setState({ timeout: 10 })
-    }
-  }
-
-
   changePending = () => {
     if (this.state.showPending === true) {
       this.setState({ showPending: false })
@@ -267,46 +258,48 @@ class App extends Component {
   handleWarranty = () => {
     if (this.state.singleCardData.garantia === true) {
       this.setState(prevState => ({
-        singleCardData: {                  
-            ...prevState.singleCardData, 
-            garantia: false    
+        singleCardData: {
+          ...prevState.singleCardData,
+          garantia: false
         }
       }))
     } else if (this.state.singleCardData.garantia === false) {
       this.setState(prevState => ({
-        singleCardData: {                  
-            ...prevState.singleCardData, 
-            garantia: true    
+        singleCardData: {
+          ...prevState.singleCardData,
+          garantia: true
         }
       }))
     }
   }
 
 
+  updateDb = () => {
+    if (this.state.timeout === 0) {
+      this.callDatabase()
+      this.setState({ timeout: 10 })
+    }
+  }
+
+  handleSocket = () => {
+    setTimeout(() => {
+      this.setState({ timeout: 0 })
+    }, 500);
+    this.updateDb()
+  }
 
   render() {
 
-    socket.once("update", (arg) => {
-
-      setTimeout(() => {
-        this.setState({ timeout: 0 })
-      }, 500);
-      this.updateDb()
-
+    socket.once("update", () => {
+      this.handleSocket()
     })
 
     socket.on('connect', () => {
-      setTimeout(() => {
-        this.setState({ timeout: 0 })
-      }, 500);
-      this.updateDb()
+      this.handleSocket()
     })
 
     socket.on('reconnect', () => {
-      setTimeout(() => {
-        this.setState({ timeout: 0 })
-      }, 500);
-      this.updateDb()
+      this.handleSocket()
     })
 
     const searchedPendencia = this.state.database.filter(e => {
@@ -315,9 +308,7 @@ class App extends Component {
       } else {
         return e
       }
-
     })
-
 
     const searchedCliente = searchedPendencia.filter(e => {
       return e.cliente.toLowerCase().includes(this.state.searchfield.toLowerCase())
@@ -334,7 +325,6 @@ class App extends Component {
     const searchedProduto = searchedPendencia.filter(e => {
       return e.produto.toLowerCase().includes(this.state.searchfield.toLowerCase())
     })
-
 
 
 
@@ -382,7 +372,7 @@ class App extends Component {
             <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
             <div className="flex">
               <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
-              <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} handleCheckbox={this.handleCheckbox} checked={this.state.checked} handleWarranty={this.handleWarranty}/>
+              <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} handleCheckbox={this.handleCheckbox} checked={this.state.checked} handleWarranty={this.handleWarranty} />
             </div>
           </div>
         </div>

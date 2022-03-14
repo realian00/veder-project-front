@@ -64,7 +64,7 @@ class Lancar extends Component {
             garantia: this.state.garantia,
             obs: this.state.obs
         }
-        
+
         fetch(`${this.state.serverAddress}/postcard`,
             {
                 method: "POST",

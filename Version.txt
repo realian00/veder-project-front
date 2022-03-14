@@ -1,0 +1,11 @@
+Version control --
+
+V1.1.0 
+
+New Feature
+
+- Warranty system added to the flow. Able to define if equipment is under warranty from the initial state, creating new color scheme and show in main screen.
+
+V1.0.0
+
+First deployed version, main functions usable

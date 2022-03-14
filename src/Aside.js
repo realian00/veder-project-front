@@ -15,9 +15,6 @@ import {
 } from "react-icons/fa";
 
 
-
-
-
 class Aside extends Component {
 
     constructor(props) {
@@ -39,7 +36,7 @@ class Aside extends Component {
 
     handleToggleSidebar = (event) => {
         if (event._reactName === 'onMouseEnter') {
-            this.setState({ toggled: 'open'})
+            this.setState({ toggled: 'open' })
             this.state.timeout()
         } else if (event._reactName === 'onMouseLeave') {
             this.setState({ toggled: 'close' })
@@ -94,7 +91,6 @@ class Aside extends Component {
             </ProSidebar>
         )
     }
-
 }
 
 export default Aside;
