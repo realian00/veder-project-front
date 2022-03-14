@@ -18,7 +18,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import "tachyons"
 
 
-// const serverAddress = 'https://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3004' 
+// const serverAddress = 'http://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3008' 
 const serverAddress = 'https://gcloudservice.biz:3004'
 const socket = io(serverAddress, { transports: ['websocket', 'polling', 'flashsocket'] });
 // const socket = io(serverAddress, {secure: true, reconnect: true, rejectUnauthorized: false})
@@ -264,6 +264,23 @@ class App extends Component {
     }
   }
 
+  handleWarranty = () => {
+    if (this.state.singleCardData.garantia === true) {
+      this.setState(prevState => ({
+        singleCardData: {                  
+            ...prevState.singleCardData, 
+            garantia: false    
+        }
+      }))
+    } else if (this.state.singleCardData.garantia === false) {
+      this.setState(prevState => ({
+        singleCardData: {                  
+            ...prevState.singleCardData, 
+            garantia: true    
+        }
+      }))
+    }
+  }
 
 
 
@@ -365,7 +382,7 @@ class App extends Component {
             <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
             <div className="flex">
               <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
-              <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} handleCheckbox={this.handleCheckbox} checked={this.state.checked} />
+              <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} handleCheckbox={this.handleCheckbox} checked={this.state.checked} handleWarranty={this.handleWarranty}/>
             </div>
           </div>
         </div>

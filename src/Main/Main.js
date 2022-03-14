@@ -1,8 +1,5 @@
 import React, { Component } from "react"
-import Orcamento from "./Components/Orcamento";
-import Pendente from "./Components/Pendente";
-import Aprovado from "./Components/Aprovado";
-
+import Column from "./Components/Column";
 import './Main.css'
 
 class Main extends Component {
@@ -33,14 +30,14 @@ class Main extends Component {
     return (
       
       <div className="w-100 center flex">
-        <div className="w-third pa2">
-          <Orcamento database={dbOrcamento} click={this.props.onClick} />
+        <div className="w-third pa2 pt0">
+          <Column database={dbOrcamento} click={this.props.onClick} status={'orcamento'} name={'Orçamento'} />
         </div>
-        <div className="w-third pa2">
-          <Pendente database={dbPendente} click={this.props.onClick} />
+        <div className="w-third pa2 pt0">
+          <Column database={dbPendente} click={this.props.onClick} status={'pendente'} name={'Pendente'}/>
         </div>
-        <div className="w-third pa2">
-          <Aprovado database={dbAprovado} click={this.props.onClick} />
+        <div className="w-third pa2 pt0">
+          <Column database={dbAprovado} click={this.props.onClick} status={'aprovado'} name={'Aprovado'}/>
         </div>
       </div>
     )
