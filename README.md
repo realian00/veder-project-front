@@ -6,7 +6,6 @@
 <p align="center">
  <a href="#about">About</a> •
  <a href="#features">Features</a> •
- <a href="#layout">Layout</a> • 
  <a href="#how-it-works">How it works</a> • 
  <a href="#tech-stack">Tech Stack</a> • 
  <a href="#contributors">Contributors</a> • 
@@ -64,7 +63,7 @@ This project is a single man army effort, entirely built by me;
 
 ## Author
 
-<a href="https://github.com/realian00/veder-project-front">
+<a href="https://github.com/realian00/">
  <br />
  <sub><b>Renato Gianelli</b></sub></a>
  <br />
@@ -78,4 +77,4 @@ This project is a single man army effort, entirely built by me;
 
 This project is under the license [MIT](./License.txt).
 
-Made by Renato Gianeli
+Made by Renato Gianelli
