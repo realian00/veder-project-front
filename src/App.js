@@ -18,8 +18,8 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import "tachyons"
 
 
-const serverAddress = 'http://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3008' 
-// const serverAddress = 'https://gcloudservice.biz:3004'
+// const serverAddress = 'http://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3008' 
+const serverAddress = 'https://gcloudservice.biz:3004'
 const socket = io(serverAddress, { transports: ['websocket', 'polling', 'flashsocket'] });
 // const socket = io(serverAddress, {secure: true, reconnect: true, rejectUnauthorized: false})
 
