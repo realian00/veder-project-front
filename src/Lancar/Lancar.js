@@ -49,7 +49,7 @@ class Lancar extends Component {
         }
     }
 
-    enviar = (event) => {
+    enviar = () => {
         const enviarData = {
             entrada: this.state.entrada,
             orcamento: this.state.orcamento,

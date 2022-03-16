@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Main from "./Main/Main";
 import Header from "./Header/Header";
 import Lancar from "./Lancar/Lancar";
-import SingleCard from "./SingleCard/SingleCard";
+import SingleCardDisplay from "./SingleCard/SingleCardDisplay";
 import Concluidas from "./Concluidas/Concluidas";
 import Login from "./Login/Login";
 import WrongPassword from "./WrongPassword/WrongPassword";
 import ServerResponse from "./ServerResponse/ServerResponse";
+import VerOrcamento from "./VerOrcamento/VerOrcamento";
 import Aside from "./Sidebar/Aside.js"
 
 import { io } from "socket.io-client";
@@ -17,12 +18,12 @@ import "tachyons"
 
 // -------------------------------------------------------------------------------------
 // Development server
-// const serverAddress = 'http://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3008' 
+const serverAddress = 'http://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3008'
 // -------------------------------------------------------------------------------------
 
 // Connect to the server, ssl secured, and open socket port
 
-const serverAddress = 'https://gcloudservice.biz:3004'
+// const serverAddress = 'https://gcloudservice.biz:3004'
 const socket = io(serverAddress, { transports: ['websocket', 'polling', 'flashsocket'] });
 
 
@@ -74,6 +75,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0)
     window.requestAnimationFrame(() => this.setState({ mounted: true }))
     return this.callDatabase()
   }
@@ -155,6 +157,11 @@ class App extends Component {
     this.setState({ currentPage: 'concluidas' })
   }
 
+  clickVerOrcamento = (event) => {
+    this.setState({ searchfield: '' })
+    this.setState({ currentPage: 'verOrcamento' })
+  }
+
 
 
 
@@ -165,7 +172,7 @@ class App extends Component {
         this.setState({ singleCardData: item })
         this.setState({ updateObs: { newValue: item.obs } })
         return this.setState({ currentPage: 'singleCard' })
-      }return event
+      } return event
     })
   }
 
@@ -372,7 +379,7 @@ class App extends Component {
             <Header change={this.onSearchChange} onClick={this.clickChangePage} username={this.state.username} logout={this.handleLogout} searchfield={this.state.searchfield} showPending={this.state.showPending} changePending={this.changePending} />
             <div className="flex">
               <Aside onClickMain={this.clickChangePageMain} onClickLancar={this.clickChangePageLancar} onClickConcluidas={this.clickChangePageConcluidas} username={this.state.username} logout={this.handleLogout}></Aside>
-              <SingleCard selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} handleCheckbox={this.handleCheckbox} checked={this.state.checked} handleWarranty={this.handleWarranty} />
+              <SingleCardDisplay selectedCard={this.state.singleCardData} onClickApagar={this.delete} onClickEnviar={this.enviar} onClickAtualizar={this.atualizar} handleUpdateObs={this.handleUpdateObs} handleCheckbox={this.handleCheckbox} checked={this.state.checked} handleWarranty={this.handleWarranty} username={this.state.username} serverAddress={serverAddress} retorna={this.clickChangePageMain} enviarFinal={this.enviar} clickVerOrcamento={this.clickVerOrcamento}/>
             </div>
           </div>
         </div>
@@ -403,6 +410,12 @@ class App extends Component {
               <ServerResponse response={this.state.serverResponse} onClick={this.clickReturn} />
             </div>
           </div>
+        </div>
+      )
+    } else if (this.state.currentPage === 'verOrcamento') {
+      return (
+        <div>
+          <VerOrcamento clickVerOrcamento={this.clickVerOrcamento} singleCardData={this.state.singleCardData} serverAddress={serverAddress} main={this.clickChangePageMain}/>
         </div>
       )
     }
