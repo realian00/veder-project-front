@@ -1,5 +1,13 @@
 Version control --
 
+V1.2.0 
+
+New Feature
+
+- New system to create and visualize the costumer proposal, in all phases of the proccess.
+
+V1.0.0
+
 V1.1.0 
 
 New Feature
