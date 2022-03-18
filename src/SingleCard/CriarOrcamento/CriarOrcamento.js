@@ -182,7 +182,7 @@ class CriarOrcamento extends Component {
                     <div className="w-100 center flex">
                         <div className="w-two-thirds pa1 pt0 ba ma1">
                             <p className="fw6">Modelo:</p>
-                            <input className="w-75" value={this.props.selectedCard.produto} readOnly={true} />
+                            <TextareaAutosize className="w-75" value={this.props.selectedCard.produto} readOnly={true} />
                         </div>
                         <div className="w-two-thirds pa1 pt0 ba ma1">
                             <p className="fw6">Série:</p>
