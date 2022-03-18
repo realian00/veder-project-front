@@ -18,12 +18,12 @@ import "tachyons"
 
 // -------------------------------------------------------------------------------------
 // Development server
-const serverAddress = 'http://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3008'
+// const serverAddress = 'http://ec2-18-228-166-126.sa-east-1.compute.amazonaws.com:3008'
 // -------------------------------------------------------------------------------------
 
 // Connect to the server, ssl secured, and open socket port
 
-// const serverAddress = 'https://gcloudservice.biz:3004'
+const serverAddress = 'https://gcloudservice.biz:3004'
 const socket = io(serverAddress, { transports: ['websocket', 'polling', 'flashsocket'] });
 
 

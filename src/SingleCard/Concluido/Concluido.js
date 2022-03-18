@@ -1,4 +1,5 @@
 import React from "react";
+import Buttons from "../Buttons/Buttons";
 import './Concluido.css'
 
 const Concluido = (props) => {
@@ -17,6 +18,19 @@ const Concluido = (props) => {
                 <p className="ma2"><strong>Situação:</strong> {props.status}</p>
                 <p className="ma2" ><strong>Observações:</strong></p>
                 <textarea className="w-100 pa2 br2 mb2 vh-25" defaultValue={props.selectedCard.obs} onChange={props.handleUpdateObs}></textarea>
+            </div>
+            <div>
+                <Buttons
+                    selectedCard={props.selectedCard}
+                    onClickAtualizar={props.onClickAtualizar}
+                    onClickEnviar={props.onClickEnviar}
+                    handleUpdateObs={props.handleUpdateObs}
+                    chamaTelaCofirma={props.chamaTelaCofirma}
+                    chamaOrcamento={props.chamaOrcamento}
+                    clickVerOrcamento={props.clickVerOrcamento} 
+                    >
+                        
+                </Buttons>
             </div>
     </div>
     )

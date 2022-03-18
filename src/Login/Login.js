@@ -18,7 +18,7 @@ const Login = (props) => {
                         <input className="b pa2 input-reset ba bg-white" type="password" id="password" onChange={props.onChange}></input>
                     </div>
                     <button className="ma4 mb2 fw9 black pv2 ph3 bg-light-gray ba b--gray hover-bg-gray hover-white" onClick={props.onClick}>Login</button>
-                    <div className="tr pa1">V1.1.0 - Developed by <a className="link underline blue hover-red" href="https://github.com/realian00" target="_blank" rel="noopener noreferrer">rG</a></div>
+                    <div className="tr pa1">V1.2.0 - Developed by <a className="link underline blue hover-red" href="https://github.com/realian00" target="_blank" rel="noopener noreferrer">rG</a></div>
             </div>
         </div>
     )

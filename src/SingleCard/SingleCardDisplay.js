@@ -71,6 +71,7 @@ class SingleCardDisplay extends Component {
                     onClickEnviar={this.props.onClickEnviar}
                     handleUpdateObs={this.props.handleUpdateObs}
                     chamaTelaCofirma={this.chamaTelaCofirma}
+                    clickVerOrcamento={this.props.clickVerOrcamento} 
                 />
                 )
             }

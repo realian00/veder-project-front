@@ -12,12 +12,6 @@ class VerOrcamento extends Component {
     }
 
     componentDidMount = () => {
-        this.enviar()
-    }
-
-
-    enviar = () => {
-
         fetch(`${this.props.serverAddress}/verOrcamento`,
             {
                 method: "POST",
@@ -26,17 +20,16 @@ class VerOrcamento extends Component {
                     { "Content-Type": "application/json" },
             }).then((response) => response.json())
             .then((response) => {
-                    this.setState({ data: response })
+                this.setState({ data: response })
             }
             )
     }
 
 
 
-
     render() {
-        const {cliente, os, date, modelo, serie, emitente, corrosaoMetal, corrosaoPlaca, garantia, limpeza, descricao, item1, item2, item3, item4, item5, peca1, peca2, peca3, peca4, peca5, tempo, prazo} = this.state.data
-        
+        const { cliente, os, date, modelo, serie, emitente, corrosaoMetal, corrosaoPlaca, garantia, limpeza, descricao, item1, item2, item3, item4, item5, peca1, peca2, peca3, peca4, peca5, tempo, prazo } = this.state.data
+
         return (
             <div className="center">
                 <h2 className="center tc">Orçamento de conserto</h2>
@@ -69,12 +62,12 @@ class VerOrcamento extends Component {
 
                 <div className="w-100 center flex">
                     <div className="w-two-thirds pa1 pt0 ba ma1">
-                        <p><label className="pointer">Corrosão partes metálicas:<input className="pl1 pointer v-mid checkbox ml" type='checkbox' checked={corrosaoMetal} readOnly={true} /></label></p>
-                        <p><label className="pointer">Corrosão placas eletrônicas:<input className="pl1 pointer v-mid checkbox ml2" type='checkbox' checked={corrosaoPlaca} readOnly={true} /></label></p>
+                        <p><label className="">Corrosão partes metálicas:<input className="pl1 v-mid checkbox ml" type='checkbox' checked={corrosaoMetal} readOnly={true} /></label></p>
+                        <p><label className="">Corrosão placas eletrônicas:<input className="pl1 v-mid checkbox ml2" type='checkbox' checked={corrosaoPlaca} readOnly={true} /></label></p>
                     </div>
                     <div className="w-two-thirds pa1 pt0 ba ma1">
-                        <p><label className="">Em garantia:<input className="pl1 v-mid checkbox ml2" type='checkbox' checked={garantia} readOnly={true} /></label></p>
-                        <p><label className="pointer">Limpeza:<input className="pl1 pointer v-mid checkbox ml2" type='checkbox' checked={limpeza} readOnly={true} /></label></p>
+                        <p><label className="">Em garantia:<input className="pl1 v-mid checkbox ml2" type='checkbox' checked={this.props.singleCardData.garantia} readOnly={true} /></label></p>
+                        <p><label className="">Limpeza:<input className="pl1  v-mid checkbox ml2" type='checkbox' checked={limpeza} readOnly={true} /></label></p>
                     </div>
                 </div>
 
@@ -88,11 +81,11 @@ class VerOrcamento extends Component {
                 <div className="w-100 center flex">
                     <div className="w-100 pa1 pt0 ba ma1">
                         <p className="fw6">Componentes avariados: <span className="tr fr">Pedir peça:</span></p>
-                        <p><label className="fw6">Item 1:<input className="w-75 mr4" value={item1} readOnly={true} /></label><span><input className="pl3 pointer v-mid checkbox" type='checkbox' checked={peca1} readOnly={true} /></span></p>
-                        <p><label className="fw6">Item 2:<input className="w-75 mr4" value={item2} readOnly={true} /></label><span><input className="pl3 pointer v-mid checkbox" type='checkbox' checked={peca2} readOnly={true} /></span></p>
-                        <p><label className="fw6">Item 3:<input className="w-75 mr4" value={item3} readOnly={true} /></label><span><input className="pl3 pointer v-mid checkbox" type='checkbox' checked={peca3} readOnly={true} /></span></p>
-                        <p><label className="fw6">Item 4:<input className="w-75 mr4" value={item4} readOnly={true} /></label><span><input className="pl3 pointer v-mid checkbox" type='checkbox' checked={peca4} readOnly={true} /></span></p>
-                        <p><label className="fw6">Item 5:<input className="w-75 mr4" value={item5} readOnly={true} /></label><span><input className="pl3 pointer v-mid checkbox" type='checkbox' checked={peca5} readOnly={true} /></span></p>
+                        <p><label className="fw6">Item 1:<input className="w-75 mr4" value={item1} readOnly={true} /></label><span><input className="pl3 v-mid checkbox" type='checkbox' checked={peca1} readOnly={true} /></span></p>
+                        <p><label className="fw6">Item 2:<input className="w-75 mr4" value={item2} readOnly={true} /></label><span><input className="pl3 v-mid checkbox" type='checkbox' checked={peca2} readOnly={true} /></span></p>
+                        <p><label className="fw6">Item 3:<input className="w-75 mr4" value={item3} readOnly={true} /></label><span><input className="pl3 v-mid checkbox" type='checkbox' checked={peca3} readOnly={true} /></span></p>
+                        <p><label className="fw6">Item 4:<input className="w-75 mr4" value={item4} readOnly={true} /></label><span><input className="pl3 v-mid checkbox" type='checkbox' checked={peca4} readOnly={true} /></span></p>
+                        <p><label className="fw6">Item 5:<input className="w-75 mr4" value={item5} readOnly={true} /></label><span><input className="pl3 v-mid checkbox" type='checkbox' checked={peca5} readOnly={true} /></span></p>
                     </div>
                 </div>
 
